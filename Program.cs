@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Heist
 {
@@ -8,32 +9,58 @@ namespace Heist
         {
             Console.WriteLine("Plan Your Heist");
             Console.WriteLine("---------------");
-            Console.WriteLine("To add a member to the team enter a name below.");
-            Console.WriteLine(">");
-            string memberName = Console.ReadLine();
-            TeamMember recruit = new TeamMember(){ FirstName = memberName};
-            Console.WriteLine("Great! now waht is his skill level? (must be a number greater than 1");
-            Console.WriteLine(">");
-            string memberSkillLevel = Console.ReadLine();
-            recruit.SkillLevel = int.Parse(memberSkillLevel) ;
-            Console.WriteLine("Wowweee! Look at thsoe skills! but are the courageous?");
-            Console.WriteLine("On a scale of 0.0 to 2.0....how courageous would you say they are?");
-            string courage = Console.ReadLine();
-            recruit.Courage = decimal.Parse(courage);
-            Console.WriteLine("We'll see if they are truly that courageous once bullets start flying.");
-            Console.WriteLine(".");
-            Console.WriteLine(".");
-            Console.WriteLine(".");
-            Console.WriteLine("So this is what we got:");
-            Console.WriteLine($@"
-            Name: {recruit.FirstName}
-            Skill Level: {recruit.SkillLevel}
-            Courage: {recruit.Courage} (<---- take this how you will)
+
+            TheTeam HeistCrew = new TheTeam();
+            bool stayInLoop = true;
+            string memberName;
+
+            while (stayInLoop == true)
+            {
+
+
+                Console.WriteLine("To add a member to the team enter a name below.");
+                Console.Write(">");
+                memberName = Console.ReadLine();
+                if (memberName != "")
+                {
+
+                    TeamMember recruit = new TeamMember(memberName);
+                    Console.WriteLine("Great! now what is his skill level? (must be a number greater than 1");
+                    Console.Write(">");
+                    string memberSkillLevel = Console.ReadLine();
+                    recruit.SkillLevel = int.Parse(memberSkillLevel);
+                    Console.WriteLine("Wowweee! Look at thsoe skills! but are the courageous?");
+                    Console.WriteLine("On a scale of 0.0 to 2.0....how courageous would you say they are?");
+                    string courage = Console.ReadLine();
+                    recruit.Courage = decimal.Parse(courage);
+                    Console.WriteLine("We'll see if they are truly that courageous once bullets start flying.");
+                    Console.WriteLine(".");
+                    Console.WriteLine(".");
+                    Console.WriteLine(".");
+                    //adding the recruit to the team
+                    HeistCrew.addTeamMate(recruit);
+                }
+                else
+                {
+                    stayInLoop = false;
+                }
+
+            }
+
+            Console.WriteLine("So this is what we got.");
+            int numberOfMembers = HeistCrew.TeamMates.Count;
+            Console.WriteLine($"You have {numberOfMembers} crew members:");
+            foreach (TeamMember member in HeistCrew.TeamMates)
+            {
+
+                Console.WriteLine($@"
+                Name: {member.FirstName}
+                Skill Level: {member.SkillLevel}
+                Courage: {member.Courage} (<---- take this how you will)
             ");
-
-
-            
+            }
 
         }
     }
 }
+

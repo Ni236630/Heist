@@ -8,5 +8,10 @@ namespace Heist
 
         public decimal Courage { get; set; }     
  
+    public TeamMember( string name)
+    {
+        FirstName = name;
     }
+    }
+
 }
