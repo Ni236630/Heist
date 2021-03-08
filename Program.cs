@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+
 
 namespace Heist
 {
@@ -13,7 +13,13 @@ namespace Heist
             TheTeam HeistCrew = new TheTeam();
             bool stayInLoop = true;
             string memberName;
+
+            //bank info
             int bankDifficulty = 100;
+            Random Luck = new Random();
+            int HeistLuck = Luck.Next(-10,10);
+            int bankDifficultyWithLuck = bankDifficulty + HeistLuck;
+
 
             while (stayInLoop == true)
             {
@@ -52,12 +58,19 @@ namespace Heist
             Console.WriteLine("So this is what we got.");
             int numberOfMembers = HeistCrew.TeamMates.Count;
             Console.WriteLine($"You have {numberOfMembers} crew members:");
-           if( HeistCrew.TeamSkillTotal < bankDifficulty)
-           {
+           if( HeistCrew.TeamSkillTotal < bankDifficultyWithLuck )
+           {    
+               Console.WriteLine($@"
+               Bank difficulty: {bankDifficultyWithLuck}
+               Crew's Skill: {HeistCrew.TeamSkillTotal}");
                Console.WriteLine("Looks like you'll be spending some time in the slammer. Better look for a day job when you get out cause you're not cut out for this.");
            }
             else 
             {
+                Console.WriteLine($@"
+               Bank difficulty: {bankDifficultyWithLuck}
+               Crew's Skill: {HeistCrew.TeamSkillTotal}
+               ");
                 Console.WriteLine("You and your crew made out with some goodies, but time to plan the next job!");
             }
         }
