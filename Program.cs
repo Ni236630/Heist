@@ -13,6 +13,7 @@ namespace Heist
             TheTeam HeistCrew = new TheTeam();
             bool stayInLoop = true;
             string memberName;
+            int bankDifficulty = 100;
 
             while (stayInLoop == true)
             {
@@ -39,6 +40,7 @@ namespace Heist
                     Console.WriteLine(".");
                     //adding the recruit to the team
                     HeistCrew.addTeamMate(recruit);
+                    HeistCrew.TeamSkillTotal  += recruit.SkillLevel;
                 }
                 else
                 {
@@ -50,16 +52,14 @@ namespace Heist
             Console.WriteLine("So this is what we got.");
             int numberOfMembers = HeistCrew.TeamMates.Count;
             Console.WriteLine($"You have {numberOfMembers} crew members:");
-            foreach (TeamMember member in HeistCrew.TeamMates)
+           if( HeistCrew.TeamSkillTotal < bankDifficulty)
+           {
+               Console.WriteLine("Looks like you'll be spending some time in the slammer. Better look for a day job when you get out cause you're not cut out for this.");
+           }
+            else 
             {
-
-                Console.WriteLine($@"
-                Name: {member.FirstName}
-                Skill Level: {member.SkillLevel}
-                Courage: {member.Courage} (<---- take this how you will)
-            ");
+                Console.WriteLine("You and your crew made out with some goodies, but time to plan the next job!");
             }
-
         }
     }
 }
