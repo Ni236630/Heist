@@ -14,9 +14,40 @@ namespace Heist
             bool stayInLoop = true;
             string memberName;
 
-          
-            
+            int NumberOfFailures = 0;
+            int NumberOfSuccesses = 0;
 
+            //Default bank difficulty
+            int bankDifficulty = 100;
+
+            //Bank Difficulty Levels
+
+            //Choosing Bank Difficulty Level
+            Console.WriteLine("Please choose the difficulty of bank's security:");
+            Console.WriteLine(@"
+                1. Can I play, Daddy?
+                2. Don't hurt me
+                3. Bring 'em on!
+                4. I am Death incarnate!");
+
+            Console.Write(">");
+            int Choice = Int32.Parse(Console.ReadLine());
+
+            switch (Choice)
+            {
+                case 1:
+                    bankDifficulty = 10;
+                    break;
+                case 2:
+                    bankDifficulty = 50;
+                    break;
+                case 3:
+                    bankDifficulty = 90;
+                    break;
+                case 4:
+                    bankDifficulty = 101;
+                    break;
+            }
 
             while (stayInLoop == true)
             {
@@ -43,7 +74,7 @@ namespace Heist
                     Console.WriteLine(".");
                     //adding the recruit to the team
                     HeistCrew.addTeamMate(recruit);
-                    HeistCrew.TeamSkillTotal  += recruit.SkillLevel;
+                    HeistCrew.TeamSkillTotal += recruit.SkillLevel;
                 }
                 else
                 {
@@ -51,39 +82,49 @@ namespace Heist
                 }
 
             }
-            
+
             Console.WriteLine("So this is what we got.");
             int numberOfMembers = HeistCrew.TeamMates.Count;
             Console.WriteLine($"You have {numberOfMembers} crew members:");
             //run  multiple times
             Console.WriteLine("Enter the number of times you would like to run this senario below.");
             Console.Write(">");
-            int NumberOfTrials = Console.Read();
+            string TrialsInput = Console.ReadLine();
+            int NumberOfTrials = Int32.Parse(TrialsInput);
             //for loop for # of Senarios
             for (int i = 0; i < NumberOfTrials; i++)
             {
                 //bank info
-                int bankDifficulty = 100;
+
                 Random Luck = new Random();
-                int HeistLuck = Luck.Next(-10,10);
+                int HeistLuck = Luck.Next(-10, 10);
                 int bankDifficultyWithLuck = bankDifficulty + HeistLuck;
-                
-                if( HeistCrew.TeamSkillTotal < bankDifficultyWithLuck )
-                {    
+
+                if (HeistCrew.TeamSkillTotal < bankDifficultyWithLuck)
+                {
                     Console.WriteLine($@"
                     Bank difficulty: {bankDifficultyWithLuck}
                     Crew's Skill: {HeistCrew.TeamSkillTotal}");
                     Console.WriteLine("Looks like you'll be spending some time in the slammer. Better look for a day job when you get out cause you're not cut out for this.");
+                    NumberOfFailures += 1;
                 }
-                else 
+                else
                 {
                     Console.WriteLine($@"
                     Bank difficulty: {bankDifficultyWithLuck}
                     Crew's Skill: {HeistCrew.TeamSkillTotal}
                     ");
                     Console.WriteLine("You and your crew made out with some goodies, but time to plan the next job!");
+                    NumberOfSuccesses += 1;
                 }
             }
+            Console.WriteLine($@"
+                After running {NumberOfTrials} trials in the simulator we have the following results:
+
+                {NumberOfSuccesses} successes
+                {NumberOfFailures} failures
+
+                ");
         }
     }
 }
